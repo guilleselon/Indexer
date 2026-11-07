@@ -1,4 +1,4 @@
-"""Configuración de logging. Lee el nivel de Settings.log_level."""
+"""Logging configuration. Reads the level from Settings.log_level."""
 
 from __future__ import annotations
 
@@ -8,10 +8,10 @@ from indexer.config import get_settings
 
 
 def setup_logging() -> None:
-    """Configura logging root según Settings.log_level.
+    """Configure root logging according to Settings.log_level.
 
-    Idempotente: force=True reemplaza la config previa en lugar de apilar
-    handlers. Llamarla desde el callback del CLI una sola vez.
+    Idempotent: force=True replaces the previous config instead of stacking
+    handlers. Call it once from the CLI callback.
     """
     settings = get_settings()
     level = getattr(logging, settings.log_level.upper(), logging.INFO)
