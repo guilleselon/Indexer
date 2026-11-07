@@ -1,6 +1,6 @@
-"""Registro de adapters disponibles. Punto único de descubrimiento.
+"""Registry of available adapters. Single discovery point.
 
-Añadir un adapter nuevo = una línea en _ADAPTERS. Cero cambios en el core.
+Adding a new adapter = one line in _ADAPTERS. Zero changes in the core.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ def get_adapter(name: str) -> BaseAdapter:
     cls = _ADAPTERS.get(name)
     if cls is None:
         raise KeyError(
-            f"Adapter desconocido: {name}. Disponibles: {sorted(_ADAPTERS)}"
+            f"Unknown adapter: {name}. Available: {sorted(_ADAPTERS)}"
         )
     return cls()
 
