@@ -1,4 +1,4 @@
-"""Configuración global del indexador, cargada desde el entorno."""
+"""Global indexer configuration, loaded from the environment."""
 
 from functools import lru_cache
 from pathlib import Path
@@ -6,13 +6,13 @@ from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Raíz del proyecto, independiente del CWD. En /proyecto/indexer/config.py
+# Project root, independent of CWD. In /proyecto/indexer/config.py
 # → BASE_DIR = /proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class Settings(BaseSettings):
-    """Configuración global. Se lee de variables de entorno o del archivo .env."""
+    """Global configuration. Read from environment variables or the .env file."""
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
@@ -21,22 +21,22 @@ class Settings(BaseSettings):
     )
 
     # RPC
-    rpc_url: str = Field(..., description="URL del proveedor JSON-RPC")
-    chain_id: int = Field(1, description="ID de la cadena")
+    rpc_url: str = Field(..., description="JSON-RPC provider URL")
+    chain_id: int = Field(1, description="Chain ID")
 
-    # Base de datos (absoluta, independiente del CWD)
+    # Database (absolute, independent of CWD)
     database_url: str = Field(
         default_factory=lambda: f"sqlite:///{BASE_DIR / 'indexer.db'}",
-        description="URL de conexión SQLAlchemy",
+        description="SQLAlchemy connection URL",
     )
 
-    # Ingesta
-    start_block: int = Field(0, description="Bloque desde el que empieza el backfill")
+    # Ingestion
+    start_block: int = Field(0, description="Block from which backfill starts")
     confirmations: int = Field(
-        12, description="Bloques de confirmación antes de considerar un bloque final"
+        12, description="Confirmation blocks before considering a block final"
     )
     max_block_range: int = Field(
-        2000, description="Máximo de bloques por llamada eth_getLogs"
+        2000, description="Maximum blocks per eth_getLogs call"
     )
 
     log_level: str = Field("INFO")
@@ -44,5 +44,5 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    """Devuelve una instancia única de Settings (cacheada)."""
+    """Return a single cached Settings instance."""
     return Settings()
