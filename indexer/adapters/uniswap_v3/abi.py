@@ -1,6 +1,6 @@
-"""ABI del evento Swap de Uniswap V3.
+"""ABI for the Uniswap V3 Swap event.
 
-Firma:
+Signature:
     event Swap(
         address indexed sender,
         address indexed recipient,
@@ -11,9 +11,9 @@ Firma:
         int24 tick
     )
 
-Idéntica en todos los pools de Uniswap V3 (las fees son un parámetro del
-constructor del pool, no del evento), así que un solo ABI sirve para los
-2-3 pools del adapter.
+Identical across all Uniswap V3 pools (fees are a constructor parameter of
+the pool, not an event parameter), so a single ABI serves all the pools the
+adapter indexes.
 """
 
 from __future__ import annotations
