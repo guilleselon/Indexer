@@ -1,12 +1,12 @@
-"""EchoAdapter: fixture permanente que demuestra el contrato BaseAdapter.
+"""EchoAdapter: a permanent fixture that demonstrates the BaseAdapter contract.
 
-Indexa los eventos Transfer de USDC en mainnet y los loguea. No escribe
-dominio, así que su rollback es no-op. Sirve para verificar el pipeline
-end-to-end sin la complejidad de Seaport, y se queda en el repo como
-adapter de referencia para aislar bugs del core.
+Indexes USDC Transfer events on mainnet and logs them. It does not write
+to the domain, so its rollback is a no-op. Used to verify the pipeline
+end-to-end without Seaport's complexity, and it stays in the repo as the
+reference adapter for isolating core bugs.
 
-Si el pipeline falla con Seaport pero funciona con Echo, el bug está en
-el adapter de Seaport. Si falla con ambos, el bug está en el core.
+If the pipeline fails with Seaport but works with Echo, the bug is in the
+Seaport adapter. If it fails with both, the bug is in the core.
 """
 
 from __future__ import annotations
@@ -62,4 +62,4 @@ class EchoAdapter(BaseAdapter):
         return {"Transfer": _handle_transfer}
 
     def rollback(self, from_block: int, to_block: int, session: Session) -> None:
-        return None  # sin dominio, nada que deshacer
+        return None  # no domain writes, nothing to undo
