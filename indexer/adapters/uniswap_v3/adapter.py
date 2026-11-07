@@ -1,4 +1,4 @@
-"""Adapter de Uniswap V3: cumple BaseAdapter para 3 pools de mainnet."""
+"""Uniswap V3 adapter: BaseAdapter implementation for 3 mainnet pools."""
 
 from __future__ import annotations
 
