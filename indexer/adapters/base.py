@@ -1,7 +1,7 @@
-"""Contrato base de los adapters de nicho.
+"""Base contract for niche adapters.
 
-El core depende SOLO de este archivo y de `indexer.core.types`/`errors`.
-Los adapters (seaport, uniswap_v3, ...) implementan `BaseAdapter`.
+The core depends ONLY on this file and on `indexer.core.types`/`errors`.
+Adapters (seaport, uniswap_v3, ...) implement `BaseAdapter`.
 """
 
 from __future__ import annotations
@@ -15,53 +15,53 @@ from indexer.core.types import DecodedEvent, EventHandler
 
 
 class BaseAdapter(ABC):
-    """Contrato que todo nicho (Seaport, Uniswap V3, ...) debe cumplir."""
+    """Contract every niche (Seaport, Uniswap V3, ...) must fulfill."""
 
-    #: Identificador único del adapter. Debe coincidir con `--adapter` en CLI.
+    #: Unique adapter identifier. Must match `--adapter` on the CLI.
     name: str
 
-    #: chain_id en el que opera este adapter.
+    #: chain_id this adapter operates on.
     chain_id: int
 
-    #: Bloque de arranque por defecto. None = usa START_BLOCK del .env.
+    #: Default starting block. None = uses Settings.start_block.
     default_start_block: int | None = None
 
     # ------------------------------------------------------------------
-    # 1. Qué escuchar
+    # 1. What to listen for
     # ------------------------------------------------------------------
 
     @abstractmethod
     def contract_addresses(self) -> list[str]:
-        """Direcciones (checksummed) cuyos logs le interesan a este adapter."""
+        """Addresses (checksummed) whose logs this adapter cares about."""
         ...
 
     @abstractmethod
     def event_abi(self) -> list[dict[str, Any]]:
-        """Fragmentos de ABI de los eventos que el decoder debe conocer."""
+        """ABI fragments for the events the decoder must know about."""
         ...
 
     # ------------------------------------------------------------------
-    # 2. Qué hacer con cada evento
+    # 2. What to do with each event
     # ------------------------------------------------------------------
 
     @abstractmethod
     def event_handlers(self) -> dict[str, EventHandler]:
-        """Mapea `event_name` -> handler."""
+        """Maps `event_name` -> handler."""
         ...
 
     # ------------------------------------------------------------------
-    # 3. Cómo deshacer (reorgs)
+    # 3. How to undo (reorgs)
     # ------------------------------------------------------------------
 
     @abstractmethod
     def rollback(self, from_block: int, to_block: int, session: Session) -> None:
-        """Deshacer los efectos del adapter en [from_block, to_block]."""
+        """Undo the adapter's effects over [from_block, to_block]."""
         ...
 
     # ------------------------------------------------------------------
-    # 4. API opcional
+    # 4. Optional API
     # ------------------------------------------------------------------
 
     def register_routes(self, router: Any) -> None:
-        """Registra endpoints HTTP propios del adapter. Por defecto, nada."""
+        """Register adapter-specific HTTP endpoints. Does nothing by default."""
         return None
