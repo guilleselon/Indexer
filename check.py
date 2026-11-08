@@ -1,4 +1,4 @@
-"""Smoke test de imports. Uso: python check.py"""
+"""Smoke test of imports. Usage: python check.py"""
 
 from indexer.adapters.base import BaseAdapter  # noqa: F401
 from indexer.adapters.echo.adapter import EchoAdapter  # noqa: F401
@@ -15,13 +15,13 @@ from indexer.persistence.models import (  # noqa: F401
 print("OK imports")
 
 d = Decoder(event_abis=[], chain_id=1)
-print(f"OK decoder: {d.chain_id} {len(d._topic_to_abi)} eventos registrados")
+print(f"OK decoder: {d.chain_id} {len(d._topic_to_abi)} events registered")
 
 tables = sorted(Base.metadata.tables.keys())
-print(f"OK modelos: {len(tables)} tablas -> {tables}")
+print(f"OK models: {len(tables)} tables -> {tables}")
 
 print(f"OK adapters: {list_adapters()}")
 
 app = create_app()
 routes = sorted({r.path for r in app.routes if hasattr(r, "path")})
-print(f"OK API: {len(routes)} rutas -> {routes}")
+print(f"OK API: {len(routes)} routes -> {routes}")
