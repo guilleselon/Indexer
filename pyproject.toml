@@ -1,7 +1,7 @@
 [project]
 name = "indexer"
 version = "0.1.0"
-description = "Indexador Web3 genérico con adapters de nicho (Seaport, Uniswap V3)"
+description = "Generic Web3 indexer with niche adapters (Seaport, Uniswap V3)"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
